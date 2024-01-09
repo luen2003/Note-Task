@@ -135,7 +135,7 @@ a {
   cursor: pointer;
   appearance: none;
   color: var(--white);
-  background: var(--primary-500);
+  background: var(--primary-800);
   border: none;
   border-radius: var(--borderRadius);
   letter-spacing: var(--letterSpacing);
