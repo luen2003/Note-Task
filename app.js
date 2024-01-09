@@ -1,21 +1,87 @@
 const express = require('express');
 const app = express();
 const tasks = require('./routes/tasks');
+const users = require('./routes/users');
 const connectDB = require('./db/connect');
+const User = require('./models/User')
 const notFound = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
 // middleware
 
-app.use(express.static('./public'));
+app.use(express.static('public'));
 app.use(express.json());
+app.use(express.urlencoded({extended:false}));
+
+app.set('view engine','ejs');
 
 // routes
 
 app.use('/api/v1/tasks', tasks);
+app.use('/api/v1/users', users);
 
-app.use(notFound);
-app.use(errorHandlerMiddleware);
+//app.use(notFound);
+//app.use(errorHandlerMiddleware);
+
+
+
+app.get('/', (req,res) => {
+  res.render('index1');
+}
+)
+app.get('/index', (req,res) => {
+  res.render('index');
+}
+)
+
+app.get('/login', (req,res) => {
+  res.render('login');
+})
+
+app.get('/signup', async (req,res) => {
+  res.render('signup');
+})
+
+app.post('/signup', async (req,res) => {
+  const data = {
+    username: req.body.username,
+    password: req.body.password,
+  }
+  const existingUser = await User.findOne({username:data.username});
+  if (existingUser) {
+    res.send("User already exists.");
+    return;
+  } else {
+    const userdata = await User.insertMany(data);
+    res.redirect('/login');
+    console.log(userdata);
+  }
+})
+
+app.post('/login', async (req,res) => {
+  try {
+    const check = await User.findOne({username:req.body.username});
+    if (!check) {
+      res.send("User Not Found" );
+      return;
+
+    }
+    if (check && req.body.password == check.password) {
+      res.render("index", {data: {username: check.username}});
+    } else {
+      res.send("Wrong Password");
+      return;
+
+    }
+  } catch (error) {
+    res.send("Wrong Details");
+    return;
+
+
+  }
+})
+
+
 const port = 5000;
 
 const start = async () => {

@@ -431,3 +431,28 @@ form > :last-child {
   text-align: center;
   margin-top: 1rem;
 }
+
+
+
+nav {
+  height: 80px;
+  background-color: #222;
+  
+}
+.list-item {
+  float: right;
+  margin-right: 25px;
+}
+
+.list-item li {
+  float: left;
+  padding: 13px 13px;
+  font-size: 18px;
+  transition: all .7s ease-in-out;
+}
+.list-item li a {
+  color: #EEE;
+}
+.list-item li:hover {
+  background-color: var(--red-dark);
+}

@@ -4,18 +4,22 @@ const formDOM = document.querySelector('.task-form')
 const taskInputDOM = document.querySelector('.task-input')
 const formAlertDOM = document.querySelector('.form-alert')
 // Load tasks from /api/tasks
+var userName =  localStorage.getItem('curUsername');
 const showTasks = async () => {
   loadingDOM.style.visibility = 'visible'
   try {
     const {
       data: { tasks },
     } = await axios.get('/api/v1/tasks')
-    if (tasks.length < 1) {
+    const userData = tasks.filter(task => task.username === userName);
+    console.log(userData)
+
+    if (userData.length < 1) {
       tasksDOM.innerHTML = '<h5 class="empty-list">No tasks in your list</h5>'
       loadingDOM.style.visibility = 'hidden'
       return
     }
-    const allTasks = tasks
+    const allTasks = userData
       .map((task) => {
         const { completed, _id: taskID, name } = task
         return `<div class="single-task ${completed && 'task-completed'}">
@@ -67,10 +71,10 @@ tasksDOM.addEventListener('click', async (e) => {
 
 formDOM.addEventListener('submit', async (e) => {
   e.preventDefault()
-  const name = taskInputDOM.value
+  const taskName = taskInputDOM.value
 
   try {
-    await axios.post('/api/v1/tasks', { name })
+    await axios.post('/api/v1/tasks', { name:taskName, username:userName })
     showTasks()
     taskInputDOM.value = ''
     formAlertDOM.style.display = 'block'
