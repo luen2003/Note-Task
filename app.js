@@ -7,6 +7,9 @@ const User = require('./models/User')
 const notFound = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
 
+var auth = false;
+var currentUsername = "";
+
 // middleware
 
 app.use(express.static('public'));
@@ -30,9 +33,15 @@ app.get('/', (req,res) => {
 }
 )
 app.get('/index', (req,res) => {
-  res.render('index');
+  if (!auth) {
+    res.render('index',{data: {username: ""}});
+  } else {
+    res.render('index',{data: {username: currentUsername}});
+  }
+  
 }
 )
+
 
 app.get('/login', (req,res) => {
   res.render('login');
@@ -67,7 +76,9 @@ app.post('/login', async (req,res) => {
 
     }
     if (check && req.body.password == check.password) {
-      res.render("index", {data: {username: check.username}});
+      auth = true;
+      currentUsername = check.username;
+      res.redirect("index");
     } else {
       res.send("Wrong Password");
       return;
