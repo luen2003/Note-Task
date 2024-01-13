@@ -456,3 +456,10 @@ nav {
 .list-item li:hover {
   background-color: var(--red-dark);
 }
+
+.welcome {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}

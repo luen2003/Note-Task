@@ -3,8 +3,15 @@ const loadingDOM = document.querySelector('.loading-text')
 const formDOM = document.querySelector('.task-form')
 const taskInputDOM = document.querySelector('.task-input')
 const formAlertDOM = document.querySelector('.form-alert')
+const welcomeDOM = document.querySelector('.welcome')
 // Load tasks from /api/tasks
 var userName =  localStorage.getItem('curUsername');
+const welcome = () => {
+  if (userName != "") {
+    welcomeDOM.innerHTML = "Hi, " + userName + "!"
+  }
+}
+welcome()
 const showTasks = async () => {
   loadingDOM.style.visibility = 'visible'
   try {
