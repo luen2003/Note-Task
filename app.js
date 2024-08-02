@@ -93,13 +93,13 @@ app.post('/login', async (req,res) => {
 })
 
 
-const port = 5000;
+const PORT = process.env.PORT || 3000;
 
 const start = async () => {
   try {
     await connectDB('mongodb+srv://noteadmin:noteadmin@notetask.yyom9hn.mongodb.net/?retryWrites=true&w=majority');
-    app.listen(port, () =>
-      console.log(`Server is listening on port ${port}...`)
+    app.listen(PORT, () =>
+      console.log(`Server is listening on port ${PORT}...`)
     );
   } catch (error) {
     console.log(error);
