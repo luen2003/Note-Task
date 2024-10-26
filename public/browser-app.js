@@ -4,22 +4,20 @@ const formDOM = document.querySelector('.task-form')
 const taskInputDOM = document.querySelector('.task-input')
 const formAlertDOM = document.querySelector('.form-alert')
 const welcomeDOM = document.querySelector('.welcome')
-// Load tasks from /api/tasks
-var userName =  localStorage.getItem('curUsername');
+
+var userName = localStorage.getItem('curUsername');
 const welcome = () => {
   if (userName != "") {
     welcomeDOM.innerHTML = "Hi, " + userName + "!"
   }
 }
 welcome()
+
 const showTasks = async () => {
   loadingDOM.style.visibility = 'visible'
   try {
-    const {
-      data: { tasks },
-    } = await axios.get('/api/v1/tasks')
-    const userData = tasks.filter(task => task.username === userName);
-    console.log(userData)
+    const { data: { tasks } } = await axios.get('/api/v1/tasks')
+    const userData = tasks.filter(task => task.username === userName)
 
     if (userData.length < 1) {
       tasksDOM.innerHTML = '<h5 class="empty-list">No tasks in your list</h5>'
@@ -32,14 +30,9 @@ const showTasks = async () => {
         return `<div class="single-task ${completed && 'task-completed'}">
 <p><span><i class="far fa-check-circle"></i></span>${name}</p>
 <div class="task-links">
-
-
-
-<!-- edit link -->
-<a href="task.html?id=${taskID}"  class="edit-link">
+<a href="task.html?id=${taskID}" class="edit-link">
 <i class="fas fa-edit"></i>
 </a>
-<!-- delete btn -->
 <button type="button" class="delete-btn" data-id="${taskID}">
 <i class="fas fa-trash"></i>
 </button>
@@ -49,13 +42,13 @@ const showTasks = async () => {
       .join('')
     tasksDOM.innerHTML = allTasks
   } catch (error) {
-    tasksDOM.innerHTML =
-      '<h5 class="empty-list">There was an error, please try later....</h5>'
+    tasksDOM.innerHTML = '<h5 class="empty-list">There was an error, please try later....</h5>'
   }
   loadingDOM.style.visibility = 'hidden'
 }
 
 showTasks()
+
 
 // delete task /api/tasks/:id
 
@@ -74,22 +67,28 @@ tasksDOM.addEventListener('click', async (e) => {
   loadingDOM.style.visibility = 'hidden'
 })
 
-// form
-
 formDOM.addEventListener('submit', async (e) => {
   e.preventDefault()
   const taskName = taskInputDOM.value
 
+  if (taskName.length > 50000) {
+    formAlertDOM.style.display = 'block'
+    formAlertDOM.textContent = 'Task name cannot exceed 50000 characters'
+    formAlertDOM.classList.add('text-danger')
+    setTimeout(() => formAlertDOM.style.display = 'none', 3000)
+    return
+  }
+
   try {
-    await axios.post('/api/v1/tasks', { name:taskName, username:userName })
+    await axios.post('/api/v1/tasks', { name: taskName, username: userName })
     showTasks()
     taskInputDOM.value = ''
     formAlertDOM.style.display = 'block'
-    formAlertDOM.textContent = `success, task added`
+    formAlertDOM.textContent = `Success, task added`
     formAlertDOM.classList.add('text-success')
   } catch (error) {
     formAlertDOM.style.display = 'block'
-    formAlertDOM.innerHTML = `error, please try again`
+    formAlertDOM.innerHTML = `Error, please try again`
   }
   setTimeout(() => {
     formAlertDOM.style.display = 'none'
