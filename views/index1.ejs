@@ -1,45 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- favicon -->
+    <!-- Favicon -->
     <link rel="shortcut icon" href="./note.ico" type="image/x-icon" />
-    <!-- font awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-    />
-    <!-- main css -->
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+    <!-- Main CSS -->
     <link rel="stylesheet" href="./main.css" />
+    <style>
+        .task-input {
+            width: 100%; /* Chiều rộng đầy đủ */
+            height: 2em; /* Chiều cao chỉ đủ cho 1 dòng */
+            overflow: hidden; /* Ẩn thanh cuộn */
+            font-size: 1em; /* Kích thước chữ */
+        }
+    </style>
     <title>Note Task</title>
-  </head>
-  <body>
+</head>
+<body>
     <header>
-      <nav>
-        <ul class="list-item">
-          <li><a href="/login">Login</a></li>
-          <li><a href="/signup">Sign Up</a></li>
-        </ul>
-      </nav>
+        <nav>
+            <ul class="list-item">
+                <li><a href="/login">Login</a></li>
+                <li><a href="/signup">Sign Up</a></li>
+            </ul>
+        </nav>
     </header>
+
+    <h3 class="welcome"></h3>
+
     <form class="task-form">
-      <h4>note task</h4>
-      <div class="form-control">
-        <input
-          type="text"
-          name="name"
-          class="task-input"
-          placeholder="e.g. code games"
-        />
-        <button type="submit" class="btn submit-btn">submit</button>
-      </div>
-      <div class="form-alert"></div>
+        <h4>Note Task</h4>
+        <div class="form-control">
+            <textarea class="task-input" placeholder="Enter your task here..."></textarea>
+            <button type="submit" class="btn submit-btn">Add Task</button>
+        </div>
+        <div class="form-alert" style="display: none;"></div>
     </form>
+
     <section class="tasks-container">
-      <p class="loading-text">Loading...</p>
-      <div class="tasks"></div>
+        <p class="loading-text">Loading...</p>
+        <div class="tasks"></div>
     </section>
-  </body>
+
+    <!-- Axios -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js" 
+            integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA==" 
+            crossorigin="anonymous" 
+            referrerpolicy="no-referrer"></script>
+    
+</body>
 </html>
