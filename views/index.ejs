@@ -82,7 +82,6 @@
 
   <h3 class="welcome"></h3>
 
-  <!-- Form -->
   <form class="task-form">
     <h4>Note Task</h4>
     <div class="form-control">
@@ -94,22 +93,18 @@
     <div class="form-alert" style="display: none;"></div>
   </form>
 
-  <!-- Task list -->
   <section class="tasks-container">
     <p class="loading-text">Loading...</p>
     <div class="tasks"></div>
   </section>
 
-  <!-- Axios -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
 
-  <!-- Username -->
   <script>
     var curUsername = <%- JSON.stringify(data.username) %>;
     localStorage.setItem('curUsername', curUsername);
   </script>
 
-  <!-- Ảnh xem trước -->
   <script>
     const imageInput = document.getElementById('imageInput');
     const previewDiv = document.getElementById('preview');
@@ -125,7 +120,6 @@
     });
   </script>
 
-  <!-- Logic chính -->
   <script src="./browser-app.js"></script>
 </body>
 

@@ -18,7 +18,6 @@ const welcome = () => {
 };
 welcome();
 
-// Upload 1 ảnh lên Cloudinary
 const uploadToCloudinary = async (file) => {
   const formData = new FormData();
   formData.append('file', file);
@@ -67,7 +66,6 @@ const showTasks = async () => {
 
 showTasks();
 
-// DELETE Task
 tasksDOM.addEventListener('click', async (e) => {
   const el = e.target;
   if (el.parentElement.classList.contains('delete-btn')) {
@@ -83,7 +81,6 @@ tasksDOM.addEventListener('click', async (e) => {
   }
 });
 
-// CREATE Task + upload ảnh
 formDOM.addEventListener('submit', async (e) => {
   e.preventDefault();
   const taskName = taskInputDOM.value;
