@@ -13,7 +13,7 @@ var userName = localStorage.getItem('curUsername') || 'Guest';
 
 const welcome = () => {
   if (userName) {
-    welcomeDOM.innerHTML = 'Hi, ' + userName + '!';
+    welcomeDOM.innerHTML = "Hi, " + userName + "!";
   }
 };
 welcome();
