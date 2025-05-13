@@ -9,7 +9,7 @@ const welcomeDOM = document.querySelector('.welcome');
 const CLOUD_NAME = 'daz56kp15';
 const UPLOAD_PRESET = 'note-task';
 
-let userName = localStorage.getItem('curUsername') || 'Guest';
+var userName = localStorage.getItem('curUsername') || 'Guest';
 
 const welcome = () => {
   if (userName) {
