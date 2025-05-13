@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
 const TaskSchema = new mongoose.Schema({
-
   name: {
     type: String,
     required: [true, 'must provide name'],
@@ -11,13 +10,14 @@ const TaskSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  images: {
+    type: [String],
+    default: [],
+  },
   completed: {
     type: Boolean,
     default: false,
   },
-
-},
-{ timestamps: true }
-)
+}, { timestamps: true })
 
 module.exports = mongoose.model('Task', TaskSchema)

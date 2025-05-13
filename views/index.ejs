@@ -1,61 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="./note.ico" type="image/x-icon" />
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="./main.css" />
-    <style>
-        .task-input {
-            width: 100%; /* Chiều rộng đầy đủ */
-            height: 2em; /* Chiều cao chỉ đủ cho 1 dòng */
-            font-size: 1em; /* Kích thước chữ */
-        }
-    </style>
-    <title>Note Task</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="./note.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+  <link rel="stylesheet" href="./main.css" />
+  <style>
+    .task-input {
+      width: 100%;
+      height: 4em;
+      font-size: 1em;
+      margin-top: 10px;
+    }
+
+    #imageInput {
+      margin-top: 10px;
+    }
+
+    #preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    img.upload-preview {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .form-control {
+      width: 100%;
+      margin-bottom: 20px;
+    }
+
+    .single-task {
+      margin-bottom: 20px;
+    }
+
+    .task-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .task-image img {
+      width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+      border-radius: 5px;
+    }
+
+    .task-note p {
+      text-align: left;
+      word-wrap: break-word;
+    }
+
+    .form-alert {
+      margin-top: 10px;
+    }
+  </style>
+  <title>Note Task With Image</title>
 </head>
+
 <body>
-    <header>
-        <nav>
-            <ul class="list-item">
-                <li><a href="/login">Login</a></li>
-                <li><a href="/signup">Sign Up</a></li>
-            </ul>
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <ul class="list-item">
+        <li><a href="/login">Login</a></li>
+        <li><a href="/signup">Sign Up</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <h3 class="welcome"></h3>
+  <h3 class="welcome"></h3>
 
-    <form class="task-form">
-        <h4>Note Task</h4>
-        <div class="form-control">
-            <textarea class="task-input" placeholder="Enter your task here..."></textarea>
-            <button type="submit" class="btn submit-btn">Add Task</button>
-        </div>
-        <div class="form-alert" style="display: none;"></div>
-    </form>
+  <!-- Form -->
+  <form class="task-form">
+    <h4>Note Task</h4>
+    <div class="form-control">
+      <input type="file" id="imageInput" accept="image/*" multiple />
+      <div id="preview"></div>
+      <textarea class="task-input" placeholder="Enter your note here..."></textarea>
+      <button type="submit" class="btn submit-btn">Upload Task</button>
+    </div>
+    <div class="form-alert" style="display: none;"></div>
+  </form>
 
-    <section class="tasks-container">
-        <p class="loading-text">Loading...</p>
-        <div class="tasks"></div>
-    </section>
+  <!-- Task list -->
+  <section class="tasks-container">
+    <p class="loading-text">Loading...</p>
+    <div class="tasks"></div>
+  </section>
 
-    <!-- Axios -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js" 
-            integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA==" 
-            crossorigin="anonymous" 
-            referrerpolicy="no-referrer"></script>
-    
-    <script>
-        var curUsername = <%- JSON.stringify(data.username) %>;
-        localStorage.setItem('curUsername', curUsername);
-    </script>
-    
-    <script src="./browser-app.js"></script>
+  <!-- Axios -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
+
+  <!-- Username -->
+  <script>
+    var curUsername = <% - JSON.stringify(data.username) %>;
+    localStorage.setItem('curUsername', curUsername);
+  </script>
+
+  <!-- Ảnh xem trước -->
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const previewDiv = document.getElementById('preview');
+
+    imageInput.addEventListener('change', () => {
+      previewDiv.innerHTML = '';
+      Array.from(imageInput.files).forEach(file => {
+        const img = document.createElement('img');
+        img.classList.add('upload-preview');
+        img.src = URL.createObjectURL(file);
+        previewDiv.appendChild(img);
+      });
+    });
+  </script>
+
+  <!-- Logic chính -->
+  <script src="./browser-app.js"></script>
 </body>
+
 </html>

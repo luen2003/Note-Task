@@ -8,9 +8,10 @@ const getAllTasks = asyncWrapper(async (req, res) => {
 })
 
 const createTask = asyncWrapper(async (req, res) => {
-  const task = await Task.create(req.body)
-  res.status(201).json({ task })
-})
+  const { name, username, images } = req.body;
+  const task = await Task.create({ name, username, images });
+  res.status(201).json({ task });
+});
 
 const getTask = asyncWrapper(async (req, res, next) => {
   const { id: taskID } = req.params
