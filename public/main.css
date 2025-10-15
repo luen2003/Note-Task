@@ -463,3 +463,42 @@ nav {
   padding: 100px;
   text-align: center;
 }
+
+.task-note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 1.5rem;
+}
+
+.task-check-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.task-check-icon .fa-check-circle {
+  font-size: 1rem;
+  color: var(--green-dark);
+  visibility: hidden;
+}
+
+/* Hiển thị icon khi task hoàn thành */
+.single-task.task-completed .task-check-icon .fa-check-circle {
+  visibility: visible;
+}
+
+/* Đảm bảo text không bị lệch */
+.task-text {
+  margin: 0;
+  line-height: 1.5rem;
+}
+
+.task-text {
+  white-space: break-spaces;
+  font-family: inherit;
+}
+

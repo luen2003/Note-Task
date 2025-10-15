@@ -11,6 +11,7 @@ const UPLOAD_PRESET = 'note-task';
 
 var userName = localStorage.getItem('curUsername') || 'Guest';
 
+// Hiển thị chào mừng
 const welcome = () => {
   if (userName) {
     welcomeDOM.innerHTML = "Hi, " + userName + "!";
@@ -18,6 +19,7 @@ const welcome = () => {
 };
 welcome();
 
+// Upload ảnh lên Cloudinary
 const uploadToCloudinary = async (file) => {
   const formData = new FormData();
   formData.append('file', file);
@@ -27,6 +29,7 @@ const uploadToCloudinary = async (file) => {
   return res.data.secure_url;
 };
 
+// Hiển thị danh sách task
 const showTasks = async () => {
   loadingDOM.style.visibility = 'visible';
   try {
@@ -41,20 +44,26 @@ const showTasks = async () => {
 
     const allTasks = userData.map((task) => {
       const { completed, _id: taskID, name, images = [] } = task;
-      const noteHTML = name.replace(/<br>/g, '<br>');
+      const noteHTML = name.replace(/<br>/g, '<br>').replace(/&nbsp;/g, '&nbsp;');
       const imagesHTML = images.map((url) => `<img src="${url}" class="task-image" />`).join('');
-      return `<div class="single-task ${completed ? 'task-completed' : ''}">
-                <div class="task-content">
-                  <div class="task-image">${imagesHTML}</div>
-                  <div class="task-note">
-                    <p><span><i class="far fa-check-circle"></i></span>${noteHTML}</p>
-                  </div>
-                </div>
-                <div class="task-links">
-                    <a href="task.html?id=${taskID}" class="edit-link"><i class="fas fa-edit"></i></a>
-                    <button type="button" class="delete-btn" data-id="${taskID}"><i class="fas fa-trash"></i></button>
-                </div>
-              </div>`;
+
+      return `
+        <div class="single-task ${completed ? 'task-completed' : ''}">
+          <div class="task-content">
+            <div class="task-image">${imagesHTML}</div>
+            <div class="task-note">
+              <span class="task-check-icon"><i class="far fa-check-circle"></i></span>
+              <p class="task-text">${noteHTML}</p>
+            </div>
+          </div>
+          <div class="task-links">
+            <a href="task.html?id=${taskID}" class="edit-link"><i class="fas fa-edit"></i></a>
+            <button type="button" class="delete-btn" data-id="${taskID}">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `;
     }).join('');
 
     tasksDOM.innerHTML = allTasks;
@@ -66,6 +75,7 @@ const showTasks = async () => {
 
 showTasks();
 
+// Xử lý xóa task
 tasksDOM.addEventListener('click', async (e) => {
   const el = e.target;
   if (el.parentElement.classList.contains('delete-btn')) {
@@ -81,6 +91,7 @@ tasksDOM.addEventListener('click', async (e) => {
   }
 });
 
+// Xử lý submit form
 formDOM.addEventListener('submit', async (e) => {
   e.preventDefault();
   const taskName = taskInputDOM.value;
@@ -112,8 +123,11 @@ formDOM.addEventListener('submit', async (e) => {
       uploadedImages.push(url);
     }
 
+    // CHỖ NÀY GIỮ SPACE + XUỐNG DÒNG
     const taskData = {
-      name: taskName.replace(/\n/g, '<br>'),
+      name: taskName
+        .replace(/ /g, '&nbsp;')   // giữ khoảng trắng
+        .replace(/\n/g, '<br>'),   // giữ xuống dòng
       username: userName,
       images: uploadedImages
     };
