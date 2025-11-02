@@ -30,12 +30,12 @@ app.use('/api/v1/users', users);
 
 
 app.get('/', (req,res) => {
-  res.render('index1');
+    res.render('index',{data: {username: "Default User"}});
 }
 )
 app.get('/index', (req,res) => {
   if (!auth) {
-    res.render('index',{data: {username: ""}});
+    res.render('index',{data: {username: "Default User"}});
   } else {
     res.render('index',{data: {username: currentUsername}});
   }
@@ -92,6 +92,12 @@ app.post('/login', async (req,res) => {
 
   }
 })
+
+app.get('/logout', (req,res) => {
+    res.redirect('/');
+    res.render('index',{data: {username: "Default User"}});
+}
+)
 
 
 const PORT = process.env.PORT || 3000;

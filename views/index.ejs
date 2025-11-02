@@ -76,6 +76,7 @@
       <ul class="list-item">
         <li><a href="/login">Login</a></li>
         <li><a href="/signup">Sign Up</a></li>
+        <li><a href="/logout" id="logoutBtn" class="logoutBtn">Logout</a></li>
       </ul>
     </nav>
   </header>
@@ -101,7 +102,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
 
   <script>
-    var curUsername = <%- JSON.stringify(data.username) %>;
+    var curUsername = <%- JSON.stringify(data.username) %> || "Default User";
     localStorage.setItem('curUsername', curUsername);
   </script>
 
@@ -121,6 +122,13 @@
   </script>
 
   <script src="./browser-app.js"></script>
+
+  <!-- Axios -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js" 
+          integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA==" 
+          crossorigin="anonymous" 
+          referrerpolicy="no-referrer">
+  </script>  
 </body>
 
 </html>
