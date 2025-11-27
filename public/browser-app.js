@@ -105,13 +105,14 @@ formDOM.addEventListener('submit', async (e) => {
     return;
   }
 
-  if (taskName.length > 50000) {
-    formAlertDOM.style.display = 'block';
-    formAlertDOM.textContent = 'Task name cannot exceed 50000 characters';
-    formAlertDOM.classList.add('text-danger');
-    setTimeout(() => formAlertDOM.style.display = 'none', 3000);
-    return;
-  }
+  const escapeHTML = (str) => {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  };
 
   loadingDOM.style.visibility = 'visible';
 
@@ -123,11 +124,10 @@ formDOM.addEventListener('submit', async (e) => {
       uploadedImages.push(url);
     }
 
-    // CHỖ NÀY GIỮ SPACE + XUỐNG DÒNG
     const taskData = {
-      name: taskName
-        .replace(/ /g, '&nbsp;')   // giữ khoảng trắng
-        .replace(/\n/g, '<br>'),   // giữ xuống dòng
+      name: escapeHTML(taskName)
+        .replace(/ /g, '&nbsp;')
+        .replace(/\n/g, '<br>'),
       username: userName,
       images: uploadedImages
     };
