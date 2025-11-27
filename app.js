@@ -6,6 +6,7 @@ const connectDB = require('./db/connect');
 const User = require('./models/User')
 const notFound = require('./middleware/not-found');
 const errorHandlerMiddleware = require('./middleware/error-handler');
+require('dotenv').config();
 
 var auth = false;
 var currentUsername = "";
@@ -104,7 +105,7 @@ const PORT = process.env.PORT || 3000;
 
 const start = async () => {
   try {
-    await connectDB('mongodb+srv://noteadmin:noteadmin@notetask.yyom9hn.mongodb.net/?retryWrites=true&w=majority');
+    await connectDB(process.env.MONGO_URI);
     app.listen(PORT, () =>
       console.log(`Server is listening on port ${PORT}...`)
     );
