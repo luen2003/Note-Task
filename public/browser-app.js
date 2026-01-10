@@ -133,10 +133,11 @@ formDOM.addEventListener('submit', async (e) => {
         formAlertDOM.textContent = 'Error uploading.';
         formAlertDOM.className = 'form-alert text-danger';
     }
-    setTimeout(() => { formAlertDOM.style.display = 'none'; }, 3000);
+    setTimeout(() => { formAlertDOM.style.display = 'none';
+      loadingDOM.style.visibility = 'hidden';
+     }, 3000);
 });
 
-// Xóa task
 tasksDOM.addEventListener('click', async (e) => {
     const el = e.target;
     if (el.parentElement.classList.contains('delete-btn')) {
