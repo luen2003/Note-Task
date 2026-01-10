@@ -46,7 +46,6 @@
       gap: 1.2rem;
     }
 
-    /* CUSTOM FILE INPUT STYLE */
     .file-input-group {
       display: flex;
       flex-direction: column;
@@ -59,7 +58,7 @@
     }
 
     input[type="file"] {
-      display: none; /* Ẩn input mặc định */
+      display: none;
     }
 
     .custom-file-upload {
@@ -137,7 +136,36 @@
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    /* Task List Styles */
+    /* Style cho hiển thị note/code */
+    .task-note-box {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .task-text-display {
+        background: #f4f4f4;
+        padding: 12px;
+        border-radius: 8px;
+        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        color: #333;
+        white-space: pre-wrap;
+        word-break: break-all;
+        overflow-x: auto;
+        border: 1px solid #ddd;
+        width: 100%;
+    }
+
+    .task-media-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
     .single-task {
       background: #fff;
       padding: 1.5rem;
@@ -148,13 +176,6 @@
       justify-content: space-between;
     }
 
-    .task-media-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 1rem;
-    }
-
     .task-image, .task-video {
       height: 180px;
       border-radius: 0.5rem;
@@ -162,21 +183,30 @@
       background: #000;
     }
 
-    .task-note {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-
+    /* THÔNG BÁO LỖI VÀ THÀNH CÔNG */
     .form-alert {
       margin-top: 1rem;
       padding: 0.75rem;
       border-radius: 0.5rem;
       text-align: center;
+      font-weight: 500;
     }
 
-    .text-success { background: #d4edda; color: #155724; }
-    .text-danger { background: #f8d7da; color: #721c24; }
+    .text-success { 
+      background: #d4edda; 
+      color: #155724; 
+      border: 1px solid #c3e6cb;
+    }
+    
+    .text-danger { 
+      background: #f8d7da; 
+      color: #721c24; 
+      border: 1px solid #f5c6cb;
+    }
+
+    .loading-text {
+        visibility: hidden;
+    }
   </style>
   <title>Note App Modern</title>
 </head>
@@ -224,7 +254,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
 
   <script>
-    // Logic lấy username
+    // Logic lấy username từ Server (Template engine)
     var curUsername = <%- JSON.stringify(data.username) %> || "Guest";
     localStorage.setItem('curUsername', curUsername);
 
@@ -237,11 +267,9 @@
     const updatePreview = () => {
       previewDiv.innerHTML = '';
       
-      // Update text hiển thị tên file
       imageNameDisplay.textContent = imageInput.files.length > 0 ? `${imageInput.files.length} images selected` : "No files chosen";
       videoNameDisplay.textContent = videoInput.files.length > 0 ? `${videoInput.files.length} videos selected` : "No files chosen";
 
-      // Render preview
       [...imageInput.files].forEach(file => {
         const img = document.createElement('img');
         img.src = URL.createObjectURL(file);
@@ -262,5 +290,4 @@
   </script>
   <script src="./browser-app.js"></script>
 </body>
-
 </html>
