@@ -14,6 +14,11 @@ const TaskSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  // [NEW] Thêm trường videos
+  videos: {
+    type: [String],
+    default: [],
+  },
   completed: {
     type: Boolean,
     default: false,

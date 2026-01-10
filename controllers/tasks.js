@@ -8,8 +8,9 @@ const getAllTasks = asyncWrapper(async (req, res) => {
 })
 
 const createTask = asyncWrapper(async (req, res) => {
-  const { name, username, images } = req.body;
-  const task = await Task.create({ name, username, images });
+  // [UPDATE] Lấy thêm videos từ req.body
+  const { name, username, images, videos } = req.body;
+  const task = await Task.create({ name, username, images, videos });
   res.status(201).json({ task });
 });
 

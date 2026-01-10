@@ -5,19 +5,64 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="shortcut icon" href="./note.ico" type="image/x-icon" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
   <link rel="stylesheet" href="./main.css" />
   <style>
-    .task-input {
-      width: 100%;
-      height: 4em;
-      font-size: 1em;
-      margin-top: 10px;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
     }
 
-    #imageInput {
-      margin-top: 10px;
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .welcome {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #444;
+    }
+
+    /* Form Styles */
+    .task-form {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+
+    .task-form h4 {
+        text-align: center;
+        margin-bottom: 1.5rem;
+        color: #555;
+    }
+
+    .form-control {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .file-input-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .file-input-group label {
+        font-weight: 600;
+        color: #666;
+    }
+
+    input[type="file"] {
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 0.5rem;
+        background: #fafafa;
     }
 
     #preview {
@@ -25,49 +70,143 @@
       flex-wrap: wrap;
       gap: 10px;
       margin-top: 10px;
+      padding: 10px;
+      border: 2px dashed #ddd;
+      border-radius: 0.5rem;
+      min-height: 50px;
     }
 
-    img.upload-preview {
-      width: 100%;
-      max-width: 250px;
-      height: auto;
-      object-fit: cover;
-      border-radius: 5px;
+    .preview-item {
+        height: 100px;
+        width: auto;
+        border-radius: 5px;
+        object-fit: cover;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
 
-    .form-control {
+    video.preview-item {
+        background: #000;
+    }
+
+    .task-input {
       width: 100%;
-      margin-bottom: 20px;
+      height: 5em;
+      padding: 1rem;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 0.5rem;
+      resize: vertical;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 0.75rem;
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #fff;
+        background: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: transform 0.2s;
+    }
+    
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    /* Task List Styles */
+    .tasks-container {
+        max-width: 800px;
+        margin: 0 auto;
     }
 
     .single-task {
-      margin-bottom: 20px;
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    
+    .single-task:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
 
     .task-content {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 10px;
+      flex-grow: 1;
+      margin-right: 1rem;
+    }
+    
+    /* Media Grid - Left Aligned */
+    .task-media-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 1rem;
+        justify-content: flex-start; /* Căn trái */
     }
 
-    .task-image img {
-      width: 100%;
-      height: auto;
-      margin-bottom: 10px;
-      border-radius: 5px;
+    .task-media-grid img, 
+    .task-media-grid video {
+      height: 200px;
+      width: auto;
+      max-width: 100%;
+      object-fit: cover; 
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .task-media-grid video {
+        background: #000;
     }
 
-    .task-note p {
-      text-align: left;
-      word-wrap: break-word;
+    .task-note {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.5rem;
+        font-size: 1.1rem;
+        color: #444;
+        line-height: 1.5;
     }
+    
+    .task-check-icon {
+        color: #28a745;
+        margin-top: 0.2rem;
+    }
+
+    .task-links {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .edit-link, .delete-btn {
+        background: transparent;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #888;
+        transition: color 0.2s;
+    }
+    
+    .edit-link:hover { color: #4facfe; }
+    .delete-btn:hover { color: #e74c3c; }
 
     .form-alert {
-      margin-top: 10px;
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      text-align: center;
     }
+    .text-success { background: #d4edda; color: #155724; }
+    .text-danger { background: #f8d7da; color: #721c24; }
   </style>
-  <title>Note Task With Image</title>
+  <title>Note Task With Image & Video</title>
 </head>
 
 <body>
@@ -81,23 +220,35 @@
     </nav>
   </header>
 
-  <h3 class="welcome"></h3>
-
-  <form class="task-form">
-    <h4>Note Task</h4>
-    <div class="form-control">
-      <input type="file" id="imageInput" accept="image/*" multiple />
-      <div id="preview"></div>
-      <textarea class="task-input" placeholder="Enter your note here..."></textarea>
-      <button type="submit" class="btn submit-btn">Upload Task</button>
-    </div>
-    <div class="form-alert" style="display: none;"></div>
-  </form>
-
-  <section class="tasks-container">
-    <p class="loading-text">Loading...</p>
-    <div class="tasks"></div>
-  </section>
+  <div class="container">
+      <h3 class="welcome"></h3>
+    
+      <form class="task-form">
+        <h4>Create a New Note</h4>
+        <div class="form-control">
+          <div class="file-input-group">
+              <label for="imageInput"><i class="fas fa-images"></i> Add Images:</label>
+              <input type="file" id="imageInput" accept="image/*" multiple />
+          </div>
+          
+          <div class="file-input-group">
+              <label for="videoInput"><i class="fas fa-video"></i> Add Videos:</label>
+              <input type="file" id="videoInput" accept="video/*" multiple />
+          </div>
+    
+          <div id="preview"></div>
+          
+          <textarea class="task-input" placeholder="What's on your mind? (Optional)"></textarea>
+          <button type="submit" class="btn submit-btn">Post Note</button>
+        </div>
+        <div class="form-alert" style="display: none;"></div>
+      </form>
+    
+      <section class="tasks-container">
+        <p class="loading-text">Loading notes...</p>
+        <div class="tasks"></div>
+      </section>
+  </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
 
@@ -108,27 +259,34 @@
 
   <script>
     const imageInput = document.getElementById('imageInput');
+    const videoInput = document.getElementById('videoInput');
     const previewDiv = document.getElementById('preview');
 
-    imageInput.addEventListener('change', () => {
-      previewDiv.innerHTML = '';
-      Array.from(imageInput.files).forEach(file => {
-        const img = document.createElement('img');
-        img.classList.add('upload-preview');
-        img.src = URL.createObjectURL(file);
-        previewDiv.appendChild(img);
-      });
-    });
+    const updatePreview = () => {
+        previewDiv.innerHTML = '';
+        if(imageInput.files) {
+            Array.from(imageInput.files).forEach(file => {
+                const img = document.createElement('img');
+                img.classList.add('preview-item');
+                img.src = URL.createObjectURL(file);
+                previewDiv.appendChild(img);
+            });
+        }
+        if(videoInput.files) {
+            Array.from(videoInput.files).forEach(file => {
+                const vid = document.createElement('video');
+                vid.classList.add('preview-item');
+                vid.src = URL.createObjectURL(file);
+                vid.controls = true;
+                previewDiv.appendChild(vid);
+            });
+        }
+    }
+
+    imageInput.addEventListener('change', updatePreview);
+    videoInput.addEventListener('change', updatePreview);
   </script>
 
   <script src="./browser-app.js"></script>
-
-  <!-- Axios -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js" 
-          integrity="sha512-TjBzDQIDnc6pWyeM1bhMnDxtWH0QpOXMcVooglXrali/Tj7W569/wd4E8EDjk1CwOAOPSJon1VfcEt1BI4xIrA==" 
-          crossorigin="anonymous" 
-          referrerpolicy="no-referrer">
-  </script>  
 </body>
-
 </html>

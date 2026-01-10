@@ -431,3 +431,36 @@ form > :last-child {
   text-align: center;
   margin-top: 1rem;
 }
+
+/* Navbar dàn hàng ngang */
+.navbar {
+    display: flex;
+    justify-content: space-between; /* Đẩy tên người dùng sang trái, menu sang phải */
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: #333; /* Màu nền thanh điều hướng */
+    color: white;
+}
+
+.welcome {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #4facfe; 
+}
+
+.list-item {
+    display: flex;
+    list-style: none;
+    gap: 1.5rem;
+    margin: 0;
+}
+
+.list-item a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.container > .welcome {
+    display: none;
+}

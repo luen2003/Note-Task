@@ -458,11 +458,14 @@ nav {
 }
 
 .welcome {
-  margin: auto;
-  width: 50%;
-  padding: 100px;
+  margin: 40px auto;
   text-align: center;
+  white-space: nowrap; 
+  font-size: 2rem;
+  font-weight: 500;
+  color: #444;
 }
+
 
 .task-note {
   display: flex;
