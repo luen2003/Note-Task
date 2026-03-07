@@ -95,6 +95,8 @@ app.post('/login', async (req,res) => {
 })
 
 app.get('/logout', (req,res) => {
+    auth = false;
+    currentUsername = "";
     res.redirect('/');
     res.render('index',{data: {username: "Default User"}});
 }

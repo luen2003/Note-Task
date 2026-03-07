@@ -505,3 +505,41 @@ nav {
   font-family: inherit;
 }
 
+.navbar{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  background:#fff;
+  padding:15px 30px;
+  border-radius:10px;
+  margin-bottom:20px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+}
+
+.nav-right{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.nav-btn{
+  padding:8px 14px;
+  text-decoration:none;
+  border-radius:6px;
+  background:#4facfe;
+  color:white;
+  font-weight:500;
+}
+
+.nav-btn:hover{
+  background:#3a8ee6;
+}
+
+.logout{
+  background:#ff4d4d;
+}
+
+.user-text{
+  font-weight:600;
+  color:#333;
+}
