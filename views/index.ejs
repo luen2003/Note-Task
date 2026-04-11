@@ -138,32 +138,32 @@
 
     /* Style cho hiển thị note/code */
     .task-note-box {
-        display: flex;
-        align-items: flex-start;
-        gap: 10px;
-        width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      width: 100%;
     }
 
     .task-text-display {
-        background: #f4f4f4;
-        padding: 12px;
-        border-radius: 8px;
-        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
-        font-size: 0.9rem;
-        line-height: 1.5;
-        color: #333;
-        white-space: pre-wrap;
-        word-break: break-all;
-        overflow-x: auto;
-        border: 1px solid #ddd;
-        width: 100%;
+      background: #f4f4f4;
+      padding: 12px;
+      border-radius: 8px;
+      font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: #333;
+      white-space: pre-wrap;
+      word-break: break-all;
+      overflow-x: auto;
+      border: 1px solid #ddd;
+      width: 100%;
     }
 
     .task-media-grid {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
     }
 
     .single-task {
@@ -176,7 +176,8 @@
       justify-content: space-between;
     }
 
-    .task-image, .task-video {
+    .task-image,
+    .task-video {
       height: 180px;
       border-radius: 0.5rem;
       object-fit: cover;
@@ -192,20 +193,20 @@
       font-weight: 500;
     }
 
-    .text-success { 
-      background: #d4edda; 
-      color: #155724; 
+    .text-success {
+      background: #d4edda;
+      color: #155724;
       border: 1px solid #c3e6cb;
     }
-    
-    .text-danger { 
-      background: #f8d7da; 
-      color: #721c24; 
+
+    .text-danger {
+      background: #f8d7da;
+      color: #721c24;
       border: 1px solid #f5c6cb;
     }
 
     .loading-text {
-        visibility: hidden;
+      visibility: hidden;
     }
   </style>
   <title>Note App</title>
@@ -213,22 +214,23 @@
 
 <body>
   <div class="navbar">
-  <!-- <div class="nav-left">
+    <!-- <div class="nav-left">
     <h2>Note App</h2>
   </div> -->
 
-  <div class="nav-right">
-    <% if(data.username === "Default User"){ %>
-      <a href="/login" class="nav-btn">Login</a>
-      <a href="/signup" class="nav-btn">Signup</a>
-    <% } else { %>
-      <span class="user-text">Hello <%= data.username %></span>
-      <a href="/logout" class="nav-btn logout">Logout</a>
-    <% } %>
+    <div class="nav-right">
+      <% if(data.username==="Default User" ){ %>
+        <a href="/login" class="nav-btn">Login</a>
+        <a href="/signup" class="nav-btn">Signup</a>
+        <% } else { %>
+          <span class="user-text">Hello <%= data.username %></span>
+          <a href="/logout" class="nav-btn logout">Logout</a>
+          <% } %>
+    </div>
   </div>
-</div>
   <div class="container">
     <h3 class="welcome"></h3>
+<% if(data.username !== "Default User"){ %>
 
     <form class="task-form">
       <h4>Create a New Note</h4>
@@ -259,19 +261,32 @@
       </div>
       <div class="form-alert" style="display: none;"></div>
     </form>
-
-    <section class="tasks-container">
+<% } else { %>
+  <p style="text-align:center; color:#aaa;">
+    Login to create a note
+  </p>
+<% } %>
+    <!-- <section class="tasks-container">
       <p class="loading-text" style="text-align: center;">Loading notes...</p>
       <div class="tasks"></div>
-    </section>
+    </section> -->
+    <% if(data.username !=="Default User" ){ %>
+      <section class="tasks-container">
+        <p class="loading-text" style="text-align: center;">Loading notes...</p>
+        <div class="tasks"></div>
+      </section>
+      <% } else { %>
+        <p style="text-align:center; margin-top:20px; color:#888;">
+          Please login to view your notes
+        </p>
+        <% } %>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.5/axios.min.js"></script>
 
   <script>
-    // Logic lấy username từ Server (Template engine)
-    var curUsername = <%- JSON.stringify(data.username) %> || "Guest";
-    localStorage.setItem('curUsername', curUsername);
+var curUsername = <%- JSON.stringify(data.username) %> || "Default User";
+localStorage.setItem('curUsername', curUsername);
 
     const imageInput = document.getElementById('imageInput');
     const videoInput = document.getElementById('videoInput');
@@ -281,7 +296,7 @@
 
     const updatePreview = () => {
       previewDiv.innerHTML = '';
-      
+
       imageNameDisplay.textContent = imageInput.files.length > 0 ? `${imageInput.files.length} images selected` : "No files chosen";
       videoNameDisplay.textContent = videoInput.files.length > 0 ? `${videoInput.files.length} videos selected` : "No files chosen";
 
@@ -305,4 +320,5 @@
   </script>
   <script src="./browser-app.js"></script>
 </body>
+
 </html>

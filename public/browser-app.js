@@ -10,7 +10,7 @@ const welcomeDOM = document.querySelector('.welcome');
 const CLOUD_NAME = 'daz56kp15';
 const UPLOAD_PRESET = 'note-task';
 
-var userName = localStorage.getItem('curUsername') || 'Guest';
+var userName = localStorage.getItem('curUsername') || 'Default User';
 
 const welcome = () => {
     if (userName) welcomeDOM.innerHTML = "Hi, " + userName + "!";
@@ -31,14 +31,13 @@ const showTasks = async () => {
     try {
         const { data: { tasks } } = await axios.get('/api/v1/tasks');
         const userData = tasks.filter((task) => task.username === userName);
-
         if (userData.length < 1) {
             tasksDOM.innerHTML = '<h5 class="empty-list">No notes yet.</h5>';
             loadingDOM.style.visibility = 'hidden';
             return;
         }
 
-        tasksDOM.innerHTML = ''; 
+        tasksDOM.innerHTML = '';
 
         userData.forEach((task) => {
             const { completed, _id: taskID, name, images = [], videos = [] } = task;
@@ -82,14 +81,13 @@ const showTasks = async () => {
 
 showTasks();
 
-// XỬ LÝ SUBMIT FORM VỚI VALIDATION
+
 formDOM.addEventListener('submit', async (e) => {
     e.preventDefault();
     const taskName = taskInputDOM.value.trim();
     const imageFiles = imageInputDOM.files;
     const videoFiles = videoInputDOM.files;
 
-    // Kiểm tra xem có bất kỳ nội dung nào không
     const hasText = taskName.length > 0;
     const hasImages = imageFiles.length > 0;
     const hasVideos = videoFiles.length > 0;
@@ -98,18 +96,18 @@ formDOM.addEventListener('submit', async (e) => {
         formAlertDOM.style.display = 'block';
         formAlertDOM.textContent = 'Please add text, an image, or a video!';
         formAlertDOM.className = 'form-alert text-danger';
-        
-        // Ẩn thông báo sau 3 giây
+
         setTimeout(() => {
             formAlertDOM.style.display = 'none';
         }, 3000);
         return;
     }
 
+    
     loadingDOM.style.visibility = 'visible';
     formAlertDOM.style.display = 'block';
     formAlertDOM.textContent = 'Uploading...';
-    formAlertDOM.className = 'form-alert'; 
+    formAlertDOM.className = 'form-alert';
 
     try {
         const uploadedImages = [];
@@ -138,10 +136,10 @@ formDOM.addEventListener('submit', async (e) => {
         document.getElementById('preview').innerHTML = '';
         document.getElementById('imageName').textContent = "No files chosen";
         document.getElementById('videoName').textContent = "No files chosen";
-        
+
         formAlertDOM.textContent = 'Note posted successfully!';
         formAlertDOM.className = 'form-alert text-success'; // Hiện màu xanh
-        
+
         showTasks();
     } catch (err) {
         formAlertDOM.textContent = 'Error uploading. Please try again.';

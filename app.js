@@ -21,7 +21,6 @@ app.use(express.urlencoded({ limit: '100mb', extended: true }));
 app.set('view engine','ejs');
 
 // routes
-
 app.use('/api/v1/tasks', tasks);
 app.use('/api/v1/users', users);
 
@@ -98,9 +97,8 @@ app.get('/logout', (req,res) => {
     auth = false;
     currentUsername = "";
     res.redirect('/');
-    res.render('index',{data: {username: "Default User"}});
-}
-)
+});
+
 
 
 const PORT = process.env.PORT || 3000;
