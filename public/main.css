@@ -543,3 +543,11 @@ nav {
   font-weight:600;
   color:#333;
 }
+
+.task-text-display {
+  white-space: pre-wrap!important; 
+  word-break: normal!important; 
+  overflow-wrap: break-word!important; 
+  font-family: inherit!important; 
+  margin: 0!important;
+}
