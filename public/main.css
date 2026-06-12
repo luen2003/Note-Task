@@ -551,3 +551,7 @@ nav {
   font-family: inherit!important; 
   margin: 0!important;
 }
+
+.welcome {
+    text-transform: none !important;
+}

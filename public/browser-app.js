@@ -13,7 +13,13 @@ const UPLOAD_PRESET = 'note-task';
 var userName = localStorage.getItem('curUsername') || 'Default User';
 
 const welcome = () => {
-    if (userName) welcomeDOM.innerHTML = "Hi, " + userName + "!";
+    const storedUsername = localStorage.getItem('curUsername');
+
+    if (storedUsername) {
+        welcomeDOM.textContent = `Hi, ${storedUsername}!`;
+    } else {
+        welcomeDOM.textContent = 'Hi, Default User!';
+    }
 };
 welcome();
 
